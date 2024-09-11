@@ -1,0 +1,48 @@
+#include <fstream>
+
+std::ifstream fin("palindrom_ciclic.in");
+std::ofstream fout("palindrom_ciclic.out");
+
+int n, v[1001], permutari_circulare = 0;
+
+void citire(){
+    fin >> n;
+    for(int i = 0; i < n; ++ i)
+        fin >> v[i];
+}
+
+void afisare_mesaj(bool ciclic, int permutari = 0){
+    if(ciclic)
+        fout << "DA " << permutari;
+    else
+        fout << "NU";
+}
+
+bool palindorm(int v[], int n){
+    for(int i = 0; i < n / 2; ++ i)
+        if(v[i] != v[n - i - 1])
+            return false;
+    return true;
+}
+
+void permutare_circulara(int v[], int n){
+    int element = v[0];
+    for(int i = 0; i < n - 1; ++ i)
+        v[i] = v[i + 1];
+    v[n - 1] = element;
+}
+
+int main()
+{
+    citire();
+    while(palindorm(v, n) == false && permutari_circulare < n){
+        permutare_circulara(v, n);
+        ++ permutari_circulare;
+    }
+
+    if(permutari_circulare == n)
+        afisare_mesaj(false);
+    else
+        afisare_mesaj(true, permutari_circulare);
+    return 0;
+}
